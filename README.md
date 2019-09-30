@@ -1,4 +1,4 @@
-# Website for recruiting unskilled labor
+# How to install this project
 
 Run
 `composer install`
