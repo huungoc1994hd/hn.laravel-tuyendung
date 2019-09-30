@@ -1,2 +1,2 @@
 # hn.laravel-tuyendung
-The website of Ms. Thư
+Run <pre>composer install</pre> to install all packages in composer.json file.
