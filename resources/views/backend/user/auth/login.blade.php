@@ -24,7 +24,6 @@
                                         {{ Form::text('username', old('username'), [
                                             'autofocus' => 'true',
                                             'placeholder' => 'Tên đăng nhập (*)',
-                                            'autocomplete' => 'off'
                                         ]) }}
                                     </div>
                                     @if ($message = Session::get('loginError'))
@@ -36,7 +35,7 @@
                                         <div class="input-group-prepend">
                                             <i class="fas fa-key"></i>
                                         </div>
-                                        {{ Form::password('password', null, [
+                                        {{ Form::password('password', [
                                             'placeholder' => 'Mật khẩu (*)',
                                             'autocomplete' => 'off'
                                         ]) }}

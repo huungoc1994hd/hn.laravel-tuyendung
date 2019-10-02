@@ -23,6 +23,7 @@
     {!! Html::style('backend/css/sweetalert.min.css') !!}
     {!! Html::style('backend/css/scrollbar.min.css') !!}
     {!! Html::style('backend/css/datatables.min.css') !!}
+    {!! Html::style('backend/css/nestable.css') !!}
     {!! Html::style('backend/css/switchery.css') !!}
     {!! Html::style('backend/css/style.css') !!}
     {!! Html::style('backend/css/profile.css') !!}
@@ -59,6 +60,7 @@
 {!! Html::script('backend/js/tagsinput.min.js') !!}
 {!! Html::script('backend/js/notify.min.js') !!}
 {!! Html::script('backend/js/sweetalert.min.js') !!}
+{!! Html::script('backend/js/nestable.js') !!}
 {!! Html::script('backend/js/raphael.min.js') !!}
 {!! Html::script('backend/js/morris.min.js') !!}
 {!! Html::script('backend/js/switchery.js') !!}

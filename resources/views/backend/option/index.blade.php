@@ -111,8 +111,8 @@
                                                 'data-msg-rangelength' => 'Vui lòng nhập 1 số điện thoại hợp lệ'
                                             ]) }}
                                         </div>
-                                        {{ Form::label('phone[phone]', null, [
-                                            'class' => 'error'
+                                        {{ Form::label('phone[phone]', ' ', [
+                                            'class' => 'error',
                                         ]) }}
                                     </div>
                                 </div>

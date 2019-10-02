@@ -19,3 +19,44 @@ selected:{fill:"#e16123"}},selectedRegions:a.data("map-selected")})});var d=b("#
 b("#recordsListView");e.length&&(e.DataTable({responsive:!0,language:{lengthMenu:"View _MENU_ records"},dom:'<"topbar"<"toolbar"><"right"li>><"table-responsive"t>p',order:[],columnDefs:[{targets:"not-sortable",orderable:!1}]}),a.find(".toolbar").text(a.data("title")));a=b(".sidebar--nav");b.each(a.find("li"),function(){var a=b(this);a.children("a").length&&a.children("ul").length&&a.addClass("is-dropdown")});a.on("click",".is-dropdown > a",function(a){a.preventDefault();var c=b(this);a=c.siblings("ul");
 c=c.parent();var d=c.siblings(".open");c.parent().parent(".sidebar--nav").length?(a.slideToggle(),c.toggleClass("open")):(a.add(d.children("ul")).slideToggle(),c.add(d).toggleClass("open"))});b('[data-toggle="sidebar"]').on("click",function(a){a.preventDefault();g.toggleClass("sidebar-mini")});b(".todo--panel").on("submit","form",function(a){a.preventDefault();a=b(this);var c=a.find(".form-control");b('<li class="list-group-item" style="display: none;"><label class="todo--label"><input type="checkbox" name="" value="1" class="todo--input"><span class="todo--text">'+
 c.val()+'</span></label><a href="#" class="todo--remove">&times;</a></li>').appendTo(a.children(".list-group")).slideDown("slow");c.val("")}).on("click",".todo--remove",function(a){a.preventDefault();var c=b(this).parent("li");c.slideUp("slow",function(){c.remove()})})})})(jQuery);
+$('form button:submit').click(function() {
+    let button = $(this);
+    let form = button.parents('form');
+
+    if (form.attr('data-validate') == 'true') {
+        form.validate({
+            submitHandler: function() {
+                buttonLoader(button);
+                return true;
+            }
+        });
+    } else {
+        buttonLoader(button);
+    }
+});
+
+/* Action loader button */
+function buttonLoader(buttonElement) {
+    let loader = buttonElement.find("i[class*='fa-']");
+    if (loader.length == 0) {
+        let loaderTag = "<i class='fa fa-spin fa-spinner mr-2'></i>";
+        buttonElement.prepend(loaderTag);
+    } else {
+        buttonElement.find("i[class*='fa-']").attr('class', 'fa fa-spin fa-spinner mr-2');
+    }
+    buttonElement.prop('disabled', true);
+}
+
+/* Redirect link */
+$(document).on('click', 'a[data-method]', function(e) {
+    let methodType = $(this).data('method');
+    let confirmMsg = $(this).data('confirm');
+    if (methodType == 'get') {
+        return true;
+    }
+
+    e.preventDefault();
+    let action = $(this).attr('href');
+    let redirect = new Redirect();
+    redirect.formAction(confirmMsg, methodType, action);
+});

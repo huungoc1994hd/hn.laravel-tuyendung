@@ -21,9 +21,6 @@
                             )
                         }}
                     </div>
-                    <div class="right">
-                        <input type="text" name="keywords" placeholder="Search..." class="form-control" />
-                    </div>
                 </div>
 
                 @if ( $mediaModel->count() > 0 )
@@ -36,6 +33,7 @@
                                     <th>Hình ảnh</th>
                                     <th>Tên</th>
                                     <th>URL</th>
+                                    <th>Trạng thái</th>
                                     <th>Ngày tạo</th>
                                     <th class="text-right">Hành động</th>
                                 </tr>
@@ -64,6 +62,7 @@
                                                 --
                                             @endif
                                         </td>
+                                        <td>{!! $media->statusConvert() !!}</td>
                                         <td>
                                             {{ $media->created_at->format('H:i:s d/m/Y') }}
                                         </td>
@@ -95,19 +94,7 @@
                         </table>
                     </div>
 
-
-                    <div class="dataTables_paginate paging_simple_numbers" id="recordsListView_paginate">
-                        <a class="paginate_button previous disabled">
-                            <i class="fa fa-angle-double-left"></i>
-                        </a>
-                        <span>
-                            <a class="paginate_button current">1</a>
-                            <a class="paginate_button">2</a>
-                        </span>
-                        <a class="paginate_button next">
-                            <i class="fa fa-angle-double-right"></i>
-                        </a>
-                    </div>
+                    {{ $mediaModel->links('vendor.pagination.dadmin-bootstrap-4') }}
                 @else
                     <div class="empty">
                         Không tìm thấy bản ghi nào

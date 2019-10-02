@@ -26,7 +26,6 @@
 {!! Html::script('backend/js/bootstrap.bundle.min.js') !!}
 {!! Html::script('backend/js/notify.min.js') !!}
 {!! Html::script('backend/js/main.js') !!}
-{!! Html::script('backend/js/scripts.js') !!}
 
 @include('backend.layouts._notify')
 </body>
