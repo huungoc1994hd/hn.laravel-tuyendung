@@ -115,6 +115,7 @@
                                             ]) !!}
                                         </span>
                                         {!! Form::text('profile[display_name]', null, [
+                                            'class' => 'form-control',
                                             'placeholder' => 'Nhập tên hiển thị vào đây...',
                                             'data-rule-required' => 'true',
                                             'data-msg-required' => 'Vui lòng nhập tên hiển thị',
@@ -134,6 +135,7 @@
                                             ]) !!}
                                         </span>
                                         {!! Form::text('email', null, [
+                                            'class' => 'form-control',
                                             'placeholder' => 'Nhập email vào đây...',
                                             'data-rule-required' => 'true',
                                             'data-msg-required' => 'Vui lòng nhập email',
@@ -156,6 +158,7 @@
                                             <span class="input-group-text">+84</span>
                                         </div>
                                         {!! Form::text('phone[phone]', null, [
+                                            'class' => 'form-control',
                                             'placeholder' => 'Nhập số điện thoại vào đây...',
                                             'data-rule-rangelength' => '9,10',
                                             'data-msg-rangelength' => 'Vui lòng nhập 1 số điện thoại hợp lệ'
@@ -200,6 +203,7 @@
                                         </span>
                                         {!!
                                             Form::text('profile[address]', null, [
+                                                'class' => 'form-control',
                                                 'placeholder' => 'Nhập địa chỉ vào đây...'
                                             ])
                                         !!}
@@ -207,7 +211,12 @@
                                 </div>
                             </div>
 
-                            {!! Form::submit('Cập nhật', ['class' => 'btn btn-rounded btn-success']) !!}
+                            {!!
+                                Form::button('Cập nhật', [
+                                    'class' => 'btn btn-rounded btn-success',
+                                    'type' => 'submit'
+                                ])
+                            !!}
 
                         {!! Form::close() !!}
                     </div>

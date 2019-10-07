@@ -16,16 +16,10 @@ $(document).ready(function () {
     $('[data-role="switch"]').bootstrapSwitch();
 
     // Nestable menu
-    $('#nestable-menu').on('click', function(e) {
-        var target = $(e.target),
-            action = target.data('action');
-        if (action === 'expand-all') {
-            $('.dd').nestable('expandAll');
-        }
-        if (action === 'collapse-all') {
-            $('.dd').nestable('collapseAll');
-        }
-    });
+    $('.dd').nestable({
+        maxDepth: 10,
+        collapsedClass:'dd-collapsed',
+    }).nestable('collapseAll');
 
     var data = "";
     $('#nestable-menu').nestable().on("change",(e) => {

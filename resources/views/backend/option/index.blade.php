@@ -47,6 +47,7 @@
                                     </span>
                                     <div class="col-md-9">
                                         {{ Form::text('web_title', old('web_title'), [
+                                            'class' => 'form-control',
                                             'placeholder' => 'Nhập tên website vào đây',
                                             'data-rule-required' => 'true',
                                             'data-msg-required' => 'Vui lòng nhập tiêu đề website'
@@ -104,6 +105,7 @@
                                                 <span class="input-group-text">+84</span>
                                             </div>
                                             {{ Form::text('phone[phone]', null, [
+                                                'class' => 'form-control',
                                                 'placeholder' => 'Nhập hotline vào đây',
                                                 'data-rule-required' => 'true',
                                                 'data-msg-required' => 'Vui lòng nhập số điện thoại',
@@ -126,6 +128,7 @@
                                     </span>
                                     <div class="col-md-9">
                                         {{ Form::text('email[email]', null, [
+                                            'class' => 'form-control',
                                             'placeholder' => 'Nhập email vào đây',
                                             'data-rule-required' => 'true',
                                             'data-msg-required' => 'Vui lòng nhập email',
@@ -144,6 +147,7 @@
                                     </span>
                                     <div class="col-md-9">
                                         {{ Form::textarea('map', null, [
+                                            'class' => 'form-control',
                                             'rows' => 4,
                                             'placeholder' => 'Chèn mã nhúng bản đồ'
                                         ]) }}
@@ -175,6 +179,7 @@
                                     </span>
                                     <div class="col-md-9">
                                         {{ Form::text('copyright', null, [
+                                            'class' => 'form-control',
                                             'placeholder' => 'Nhập bản quyền trang web'
                                         ]) }}
                                     </div>
@@ -207,6 +212,7 @@
                                     </span>
                                     <div class="col-md-9">
                                         {{ Form::textarea('fb_pixel', null, [
+                                            'class' => 'form-control',
                                             'rows' => 4,
                                             'placeholder' => 'Chèn mã nhúng Facebook Pixel'
                                         ]) }}
@@ -222,6 +228,7 @@
                                     </span>
                                     <div class="col-md-9">
                                         {{ Form::textarea('gg_analytics', null, [
+                                            'class' => 'form-control',
                                             'rows' => 4,
                                             'placeholder' => 'Chèn mã nhúng Google Analytics'
                                         ]) }}
@@ -237,6 +244,7 @@
                                     </span>
                                     <div class="col-md-9">
                                         {{ Form::text('cdn_url', null, [
+                                            'class' => 'form-control',
                                             'placeholder' => 'URL Bizfly CDN'
                                         ]) }}
                                     </div>
@@ -245,8 +253,9 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-9 offset-md-3">
-                                {{ Form::submit('<i class="fa fa-save mr-2"></i>Lưu thay đổi', [
-                                    'class' => 'btn btn-lg btn-success'
+                                {{ Form::button('<i class="fa fa-save mr-2"></i>Lưu thay đổi', [
+                                    'class' => 'btn btn-lg btn-success',
+                                    'type' => 'submit'
                                 ]) }}
                             </div>
                         </div>

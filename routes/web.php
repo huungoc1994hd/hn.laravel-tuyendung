@@ -38,6 +38,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Backend', 'middleware' => ['
 
     Route::group(['prefix' => 'category'], function () {
         Route::get('/', 'CategoryController@index')->name('admin.category');
+        Route::post('/expand', 'CategoryController@expand')->name('admin.category.expand');
     });
 
 

@@ -67,12 +67,6 @@
     -moz-box-sizing: border-box
 }
 
-.dd .dd-item .form-check {
-    position: absolute;
-    top: 8px;
-    left: 15px
-}
-
 .dd-item .dd-actions > button[data-action],
 .dd3-handle {
     cursor: pointer;

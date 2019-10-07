@@ -37,8 +37,8 @@
         noDragClass: 'dd-nodrag',
         emptyClass: 'dd-empty',
         actionClass: 'dd-actions',
-        expandBtnHTML: '<button data-toggle="tooltip" title="Mở rộng" data-action="expand" type="button" class="btn btn-xs btn-rounded btn-primary"></button>',
-        collapseBtnHTML: '<button data-toggle="tooltip" title="Thu gọn" data-action="collapse" type="button" class="btn btn-xs btn-rounded btn-primary"></button>',
+        expandBtnHTML: '<button data-action="expand" type="button" class="btn btn-xs btn-rounded btn-primary"></button>',
+        collapseBtnHTML: '<button data-action="collapse" type="button" class="btn btn-xs btn-rounded btn-primary"></button>',
         group: 0,
         maxDepth: 5,
         threshold: 20
@@ -62,9 +62,9 @@
 
             list.placeEl = $('<div class="' + list.options.placeClass + '"/>');
 
-            $.each(this.el.find(list.options.itemNodeName), function (k, el) {
+            /*$.each(this.el.find(list.options.itemNodeName), function (k, el) {
                 list.setParent($(el));
-            });
+            });*/
 
             list.el.on('click', 'button', function (e) {
                 if (list.dragEl) {
@@ -73,6 +73,7 @@
                 var target = $(e.currentTarget),
                     action = target.data('action'),
                     item = target.parent(`.${list.options.actionClass}`).parent(list.options.itemNodeName);
+
                 if (action === 'collapse') {
                     list.collapseItem(item);
                 }
@@ -187,8 +188,36 @@
 
         expandItem: function (li) {
             li.removeClass(this.options.collapsedClass);
-            li.find('[data-action="expand"]').hide();
-            li.find('[data-action="collapse"]').show();
+            li.children(`.${this.options.actionClass}`).children('[data-action="expand"]').hide();
+            li.children(`.${this.options.actionClass}`).children('[data-action="collapse"]').show();
+
+            if (!li.children(this.options.listNodeName).length) {
+                let id = li.data('id');
+                let url = $("#expandUrl").val();
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
+                    },
+                    cache: false,
+                    data: {id: id},
+                    dataType: 'JSON',
+                    beforeSend: function() {
+                        let loader = "<span class='fa fa-2x fa-spinner fa-spin expand-loader text-center d-block'></span>";
+                        li.append(loader);
+                    },
+                }).done(function(data) {
+                    if (data.success == true) {
+                        li.append(data.html);
+                    }
+                }).fail(function(err) {
+                    console.log(err.responseText);
+                }).always(function() {
+                    li.children('.expand-loader').remove();
+                });
+            }
+
             li.children(this.options.listNodeName).show();
         },
 
@@ -196,8 +225,8 @@
             var lists = li.children(this.options.listNodeName);
             if (lists.length) {
                 li.addClass(this.options.collapsedClass);
-                li.find('[data-action="collapse"]').hide();
-                li.find('[data-action="expand"]').show();
+                li.children(`.${this.options.actionClass}`).children('[data-action="collapse"]').hide();
+                li.children(`.${this.options.actionClass}`).children('[data-action="expand"]').show();
                 li.children(this.options.listNodeName).hide();
             }
         },
@@ -455,8 +484,6 @@
                 }
             }
         });
-
-        $("[data-toggle='tooltip']").tooltip();
 
         return retval || lists;
     };

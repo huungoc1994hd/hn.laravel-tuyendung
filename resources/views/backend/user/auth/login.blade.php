@@ -24,6 +24,7 @@
                                         {{ Form::text('username', old('username'), [
                                             'autofocus' => 'true',
                                             'placeholder' => 'Tên đăng nhập (*)',
+                                            'class' => 'form-control'
                                         ]) }}
                                     </div>
                                     @if ($message = Session::get('loginError'))
@@ -37,7 +38,8 @@
                                         </div>
                                         {{ Form::password('password', [
                                             'placeholder' => 'Mật khẩu (*)',
-                                            'autocomplete' => 'off'
+                                            'autocomplete' => 'off',
+                                            'class' => 'form-control'
                                         ]) }}
                                     </div>
                                     @if ($message = Session::get('loginError'))
@@ -45,8 +47,9 @@
                                     @endif
                                 </div>
                                 <div class="m-account--actions">
-                                    {{ Form::submit('Đăng nhập', [
-                                        'class' => 'btn btn-rounded btn-info btn-block'
+                                    {{ Form::button('Đăng nhập', [
+                                        'class' => 'btn btn-rounded btn-info btn-block',
+                                        'type' => 'submit'
                                     ]) }}
                                 </div>
 

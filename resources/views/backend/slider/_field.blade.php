@@ -5,6 +5,7 @@
     ]) }}
     <div class="col-md-9">
         {{ Form::text('name', null, [
+            'class' => 'form-control',
             'data-rule-required' => 'true',
             'data-msg-required' => 'Vui lòng nhập tiêu đề ảnh'
         ]) }}
@@ -31,7 +32,9 @@
         'class' => 'label-text col-md-3 col-form-label control-label'
     ]) }}
     <div class="col-md-9">
-        {{ Form::text('alt') }}
+        {{ Form::text('alt', null, [
+            'class' => 'form-control',
+        ]) }}
     </div>
 </div>
 <div class="form-group row">
@@ -39,7 +42,9 @@
         'class' => 'label-text col-md-3 col-form-label control-label'
     ]) }}
     <div class="col-md-9">
-        {{ Form::text('link') }}
+        {{ Form::text('link', null, [
+            'class' => 'form-control',
+        ]) }}
     </div>
 </div>
 <div class="form-group row">
@@ -86,8 +91,9 @@
 </div>
 <div class="row mt-3">
     <div class="col-md-9 offset-md-3">
-        {{ Form::submit('<i class="fa fa-save mr-2"></i>Lưu thay đổi', [
-            'class' => 'btn btn-lg btn-success'
+        {{ Form::button('<i class="fa fa-save mr-2"></i>Lưu thay đổi', [
+            'class' => 'btn btn-lg btn-success',
+            'type' => 'submit'
         ]) }}
     </div>
 </div>

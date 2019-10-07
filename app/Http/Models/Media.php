@@ -2,7 +2,7 @@
 
 namespace App\Http\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Http\Components\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -26,11 +26,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  */
 class Media extends Model
 {
-    const STATUS_HIDDEN = 0;
-    const STATUS_SHOW = 1;
-    const TARGET_BLANK = '_blank';
-    const TARGET_SELF = '_self';
-
     use Sluggable;
 
     public $table = 'media';
@@ -52,16 +47,6 @@ class Media extends Model
         'relationship_table',
         'relationship_id',
     ];
-
-    /**
-     * This action will be called when this model is saving
-     */
-    public function save(array $options = [])
-    {
-        $this->order = 0;
-
-        return parent::save($options);
-    }
 
     /**
      * Return the sluggable configuration array for this model.
