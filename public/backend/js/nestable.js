@@ -191,33 +191,6 @@
             li.children(`.${this.options.actionClass}`).children('[data-action="expand"]').hide();
             li.children(`.${this.options.actionClass}`).children('[data-action="collapse"]').show();
 
-            if (!li.children(this.options.listNodeName).length) {
-                let id = li.data('id');
-                let url = $("#expandUrl").val();
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
-                    },
-                    cache: false,
-                    data: {id: id},
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        let loader = "<span class='fa fa-2x fa-spinner fa-spin expand-loader text-center d-block'></span>";
-                        li.append(loader);
-                    },
-                }).done(function(data) {
-                    if (data.success == true) {
-                        li.append(data.html);
-                    }
-                }).fail(function(err) {
-                    console.log(err.responseText);
-                }).always(function() {
-                    li.children('.expand-loader').remove();
-                });
-            }
-
             li.children(this.options.listNodeName).show();
         },
 

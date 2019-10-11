@@ -3,7 +3,6 @@
 namespace App\Widgets;
 
 use Arrilot\Widgets\AbstractWidget;
-use App\Http\Models\Category as CategoryModel;
 
 class Category extends AbstractWidget
 {
@@ -13,7 +12,8 @@ class Category extends AbstractWidget
      * @var array
      */
     protected $config = [
-        'template' => 'ol'
+        'template' => 'ol',
+        'categories' => null
     ];
 
     /**
@@ -30,11 +30,9 @@ class Category extends AbstractWidget
      */
     public function run()
     {
-        $categories = CategoryModel::where('parent_id', 0)->get();
-
         return view('widgets.category.index', [
-            'categories' => $categories,
-            'config' => $this->config
+            'config' => $this->config,
+            'categories' => $this->config['categories']
         ]);
     }
 }

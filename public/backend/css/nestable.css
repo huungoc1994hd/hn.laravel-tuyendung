@@ -192,3 +192,7 @@
     right: 15px;
     top: 12px
 }
+
+.dd ol ol {
+    display: none
+}

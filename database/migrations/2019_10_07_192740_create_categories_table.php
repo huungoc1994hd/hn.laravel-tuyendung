@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('slug');
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->string('type', 20)->nullable();
             $table->tinyInteger('status')->default(1);
             $table->integer('order')->default(0);

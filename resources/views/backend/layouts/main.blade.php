@@ -28,6 +28,7 @@
     {!! Html::style('backend/css/style.css') !!}
     {!! Html::style('backend/css/profile.css') !!}
 
+    {!! Html::script('backend/js/jquery.min.js') !!}
     {!! Html::script('vendor/laravel-ckeditor/ckeditor.js') !!}
 </head>
 <body>
@@ -50,7 +51,7 @@
     </main>
 </div>
 
-{!! Html::script('backend/js/jquery.min.js') !!}
+
 {!! Html::script('backend/js/jquery-ui.min.js') !!}
 {!! Html::script('backend/js/bootstrap.bundle.min.js') !!}
 {!! Html::script('backend/js/bootbox.all.min.js') !!}

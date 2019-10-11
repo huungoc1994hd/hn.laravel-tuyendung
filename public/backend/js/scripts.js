@@ -16,10 +16,7 @@ $(document).ready(function () {
     $('[data-role="switch"]').bootstrapSwitch();
 
     // Nestable menu
-    $('.dd').nestable({
-        maxDepth: 10,
-        collapsedClass:'dd-collapsed',
-    }).nestable('collapseAll');
+    $('.dd').nestable();
 
     var data = "";
     $('#nestable-menu').nestable().on("change",(e) => {
