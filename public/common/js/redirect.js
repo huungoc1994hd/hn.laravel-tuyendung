@@ -47,7 +47,7 @@ class Redirect extends Page {
                 type: 'error',
                 title: 'Error 419',
                 text: csrfError,
-            })
+            });
 
             return false;
         }

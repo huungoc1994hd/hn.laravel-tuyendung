@@ -1,3 +1,5 @@
+{{ Form::hidden('id', $categoryModel->id ?? '') }}
+
 <div class="form-group required row">
     {{ Form::label('name', 'Tên danh mục', [
         'class' => 'label-text col-lg-3 col-form-label control-label'
@@ -21,7 +23,7 @@
             Form::select(
                 'parent_id',
                 $categoriesSelectData,
-                0,
+                $categoryModel->parent_id ?? 0,
                 [
                     'class' => 'form-control'
                 ]
@@ -43,7 +45,7 @@
                     'post' => 'Bài viết',
                     'recruitment' => 'Tin tuyển dụng'
                 ],
-                0,
+                $categoryModel->type ?? 0,
                 [
                     'class' => 'form-control',
                     'data-rule-required' => 'true',
@@ -68,7 +70,7 @@
             Form::checkbox(
                 'status',
                 1,
-                collect($categoryModel)->isEmpty() || $categoryModel->status == 1 ? true : false,
+                (collect($categoryModel)->isEmpty() || $categoryModel->status == 1) ? true : false,
                 [
                     'data-role' => 'switch',
                     'data-on-color' => 'primary',

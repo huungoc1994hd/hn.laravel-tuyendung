@@ -19,7 +19,14 @@ selected:{fill:"#e16123"}},selectedRegions:a.data("map-selected")})});var d=b("#
 b("#recordsListView");e.length&&(e.DataTable({responsive:!0,language:{lengthMenu:"View _MENU_ records"},dom:'<"topbar"<"toolbar"><"right"li>><"table-responsive"t>p',order:[],columnDefs:[{targets:"not-sortable",orderable:!1}]}),a.find(".toolbar").text(a.data("title")));a=b(".sidebar--nav");b.each(a.find("li"),function(){var a=b(this);a.children("a").length&&a.children("ul").length&&a.addClass("is-dropdown")});a.on("click",".is-dropdown > a",function(a){a.preventDefault();var c=b(this);a=c.siblings("ul");
 c=c.parent();var d=c.siblings(".open");c.parent().parent(".sidebar--nav").length?(a.slideToggle(),c.toggleClass("open")):(a.add(d.children("ul")).slideToggle(),c.add(d).toggleClass("open"))});b('[data-toggle="sidebar"]').on("click",function(a){a.preventDefault();g.toggleClass("sidebar-mini")});b(".todo--panel").on("submit","form",function(a){a.preventDefault();a=b(this);var c=a.find(".form-control");b('<li class="list-group-item" style="display: none;"><label class="todo--label"><input type="checkbox" name="" value="1" class="todo--input"><span class="todo--text">'+
 c.val()+'</span></label><a href="#" class="todo--remove">&times;</a></li>').appendTo(a.children(".list-group")).slideDown("slow");c.val("")}).on("click",".todo--remove",function(a){a.preventDefault();var c=b(this).parent("li");c.slideUp("slow",function(){c.remove()})})})})(jQuery);
-$('form button:submit').click(function() {
+
+var token = $("meta[name='csrf-token']").attr('content');
+
+$.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+    jqXHR.setRequestHeader('X-CSRF-Token', token);
+});
+
+$(document).on('click', 'form button:submit', function() {
     let button = $(this);
     let form = button.parents('form');
 

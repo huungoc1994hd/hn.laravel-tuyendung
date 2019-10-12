@@ -20,7 +20,23 @@ Category widget template ol view
                         <button data-action="expand" type="button" class="btn btn-xs btn-rounded btn-primary"></button>
                         <button data-action="collapse" type="button" class="btn btn-xs btn-rounded btn-primary" style="display: none"></button>
                     @endif
-                    <a href="" data-id="{{ $item->id }}" class="btn btn-xs btn-rounded btn-success" data-toggle="tooltip" title="Sửa"><i class="fa fa-edit"></i></a>
+
+                    {{
+                        Html::linkRoute(
+                            'admin.category.update',
+                            '<i class="fa fa-edit"></i>',
+                            [
+                                'id' => $item->id
+                            ],
+                            [
+                                'class' => 'btn btn-xs btn-rounded btn-success',
+                                'data-toggle' => 'tooltip',
+                                'title' => 'Sửa'
+                            ]
+                        )
+                    }}
+
+
                     {{
                         Html::linkRoute(
                             'admin.category.delete',

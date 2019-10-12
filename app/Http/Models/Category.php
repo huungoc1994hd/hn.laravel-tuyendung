@@ -71,28 +71,4 @@ class Category extends Model
         return $this->hasMany(self::class,'parent_id')
             ->with('children');
     }
-
-    /**
-     * This action will be called when model is saving
-     * @return bool|void
-     */
-    public function save(array $options = [])
-    {
-        parent::save($options);
-
-        $urlPrefix = '';
-
-        switch ($this->type) {
-            case 'post':
-                $urlPrefix = $this::POST_CATE_SLUG_DEFAULT;
-                break;
-            case 'recruitment':
-                $urlPrefix = $this::RECRUITMENT_CATE_SLUG_DEFAULT;
-                break;
-        }
-
-        $this->url = $urlPrefix . '/' . $this->slug;
-
-        return parent::save($options);
-    }
 }

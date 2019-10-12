@@ -32,13 +32,14 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Backend', 'middleware' => ['
     Route::group(['prefix' => '/slider'], function () {
         Route::get('/', 'SliderController@index')->name('admin.slider.index');
         Route::match(['get', 'post'], '/create', 'SliderController@create')->name('admin.slider.create');
-        Route::match(['get', 'put'], '/update', 'SliderController@update')->name('admin.slider.update');
+        Route::match(['get', 'put'], '/update', 'SliderController@update ')->name('admin.slider.update');
         Route::delete('/delete', 'SliderController@delete')->name('admin.slider.delete');
     });
 
     Route::group(['prefix' => 'category'], function () {
         Route::get('/', 'CategoryController@index')->name('admin.category');
-        Route::put('/create', 'CategoryController@create')->name('admin.category.create');
+        Route::match(['get', 'post'], '/create', 'CategoryController@create')->name('admin.category.create');
+        Route::match(['get', 'put'], '/update', 'CategoryController@update')->name('admin.category.update');
         Route::delete('/delete', 'CategoryController@delete')->name('admin.category.delete');
     });
 

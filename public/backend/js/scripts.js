@@ -15,6 +15,9 @@ $(document).ready(function () {
     // Switch
     $('[data-role="switch"]').bootstrapSwitch();
 
+    // Tooltip
+    $('[rel="tooltip"], [data-toggle="tooltip"]').tooltip();
+
     // Nestable menu
     $('.dd').nestable();
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Components\Model;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Category;
 use App\Http\Requests\Backend\CategoryFormRequest;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CategoryController extends Controller
 {
@@ -18,50 +20,78 @@ class CategoryController extends Controller
 
         $categories = Category::where('parent_id', 0)
             ->with('children')
+            ->orderBy('order', 'asc')
             ->get();
-
-        $categoriesSelectData = $this->flattenDown($categories);
 
         return view('backend.category.index')->with([
             'categoryModel' => $categoryModel,
-            'categories' => $categories,
-            'categoriesSelectData' => $categoriesSelectData
+            'categories' => $categories
         ]);
-    }
-
-    /**
-     * @param $data
-     * @param int $index
-     * @param array $elements
-     * @return array of select tag data list
-     */
-    protected function flattenDown($data, $index = 0, &$elements = [])
-    {
-        $elements[0] = ':root';
-
-        foreach($data as $e) {
-            $elements[$e->id] = str_repeat('---', $index) . $e->name;
-
-            if (!empty($e->children)) {
-                $elements = $this->flattenDown($e->children, $index+1, $elements);
-            }
-        }
-
-        return $elements;
     }
 
     /**
      * Action create the category
      * @param CategoryFormRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function create(CategoryFormRequest $request)
     {
-        $input = $request->all();
-        if (!Category::create($input)) {
-            return redirect()->back()->with('error', 'Đã xảy ra lỗi máy chủ cục bộ');
+        $categoryModel = new Category();
+
+        $categories = Category::where('parent_id', 0)
+            ->with('children')
+            ->get();
+        $categoriesSelectData = $this->flattenDown($categories);
+
+        if ($request->isMethod('post')) {
+            $input = $request->all();
+            if (!Category::create($input)) {
+                return redirect()->back()
+                    ->with('error', 'Đã xảy ra lỗi máy chủ cục bộ');
+            }
+
+            return redirect()->route('admin.category')
+                ->with('success', 'Một danh mục đã được thêm');
         }
 
-        return redirect()->back()->with('success', 'Một danh mục đã được thêm');
+        return view('backend.category.create')->with([
+            'categoryModel' => $categoryModel,
+            'categoriesSelectData' => $categoriesSelectData
+        ]);
+    }
+
+    /**
+     * Action update the category
+     * @param CategoryFormRequest $request
+     */
+    public function update(CategoryFormRequest $request)
+    {
+        $categoryModel = Category::find($request->id);
+        if (!$categoryModel) {
+            throw new NotFoundHttpException();
+        }
+
+        $categories = Category::where('parent_id', 0)
+            ->with('children')
+            ->get();
+        $categoriesSelectData = $this->flattenDown($categories);
+
+        if ($request->isMethod('put')) {
+            $input = $request->all();
+            $input['status'] = $input['status'] ?? Category::STATUS_HIDDEN;
+            if (!$categoryModel->update($input)) {
+                return redirect()->back()
+                    ->with('error', 'Đã xảy ra lỗi máy chủ cục bộ');
+            }
+
+            return redirect()->route('admin.category')
+                ->with('success', 'Một danh mục đã được cập nhật');
+        }
+
+        return view('backend.category.update')->with([
+            'categoryModel' => $categoryModel,
+            'categoriesSelectData' => $categoriesSelectData
+        ]);
     }
 
     /**
@@ -103,5 +133,26 @@ class CategoryController extends Controller
         }
 
         return $result;
+    }
+
+    /**
+     * @param $data
+     * @param int $index
+     * @param array $elements
+     * @return array of select tag data list
+     */
+    protected function flattenDown($data, $index = 0, &$elements = [])
+    {
+        $elements[0] = ':root';
+
+        foreach($data as $e) {
+            $elements[$e->id] = str_repeat('---', $index) . $e->name;
+
+            if (!empty($e->children)) {
+                $elements = $this->flattenDown($e->children, $index+1, $elements);
+            }
+        }
+
+        return $elements;
     }
 }
