@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Components\Model;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Category;
 use App\Http\Requests\Backend\CategoryFormRequest;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -154,5 +155,69 @@ class CategoryController extends Controller
         }
 
         return $elements;
+    }
+
+    /**
+     * Save the changes when ordering
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function order(Request $request)
+    {
+        $data = json_decode($request->data, true);
+
+        $dataSave = $this->handleData($data);
+        if (empty($dataSave)) {
+            return redirect()->back()->with('error', 'Không có dữ liệu nào bị thay đổi');
+        }
+
+        DB::beginTransaction();
+
+        $idStr = implode(',', $dataSave['id']);
+        $orderStr = implode(',', $dataSave['order']);
+        $parentStr = implode(',', $dataSave['parent_id']);
+
+        $query = Category::whereIn('id', $dataSave['id'])
+            ->update([
+                'order' => DB::raw("ELT(field(id, {$idStr}), {$orderStr})"),
+                'parent_id' => DB::raw("ELT(field(id, {$idStr}), {$parentStr})")
+            ]);
+
+        if (!$query) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Đã xảy ra lỗi máy chủ cục bộ');
+        }
+
+        DB::commit();
+        return redirect()->back()->with('success', 'Dữ liệu đã được cập nhật thành công');
+    }
+
+    /**
+     * Handle the input data
+     *
+     * @param array $data
+     * @param int $parent_id default 0
+     * @param array $result
+     *
+     * @return array
+     */
+    protected function handleData(array $data = [], $parent_id = 0, &$result = [])
+    {
+        if (empty($data)) {
+            return $data;
+        }
+
+        foreach($data as $key => $item) {
+            $result['id'][] = $item['id'];
+            $result['order'][] = $key;
+            $result['parent_id'][] = $parent_id;
+
+            if (!empty($item['children'])) {
+                $this->handleData($item['children'], $item['id'], $result);
+            }
+        }
+
+        return $result;
     }
 }

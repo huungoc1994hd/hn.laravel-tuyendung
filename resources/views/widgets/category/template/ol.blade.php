@@ -11,16 +11,11 @@ Category widget template ol view
                 <div class="dd-handle">
                     {{ $item->name }}
                 </div>
-                <label class="form-check" style="position: absolute;top: 8px;left: 15px">
-                    <input type="checkbox" name="checkbox" value="{{ $item->id }}" class="form-check-input">
+                {{--<label class="form-check" style="position: absolute;top: 8px;left: 15px">
+                    <input type="checkbox" name="checkbox" value="{{ $item->id }}" class="form-check-input" rel="select-one">
                     <span class="form-check-label"></span>
-                </label>
+                </label>--}}
                 <div class="dd-actions">
-                    @if ($item->children->count())
-                        <button data-action="expand" type="button" class="btn btn-xs btn-rounded btn-primary"></button>
-                        <button data-action="collapse" type="button" class="btn btn-xs btn-rounded btn-primary" style="display: none"></button>
-                    @endif
-
                     {{
                         Html::linkRoute(
                             'admin.category.update',

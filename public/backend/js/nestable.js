@@ -37,8 +37,8 @@
         noDragClass: 'dd-nodrag',
         emptyClass: 'dd-empty',
         actionClass: 'dd-actions',
-        expandBtnHTML: '<button data-action="expand" type="button" class="btn btn-xs btn-rounded btn-primary"></button>',
-        collapseBtnHTML: '<button data-action="collapse" type="button" class="btn btn-xs btn-rounded btn-primary"></button>',
+        expandBtnHTML: '<button data-action="expand" type="button" class="btn btn-xs btn-rounded btn-primary" data-toggle="tooltip" title="Mở rộng"></button>',
+        collapseBtnHTML: '<button data-action="collapse" type="button" class="btn btn-xs btn-rounded btn-primary" data-toggle="tooltip" title="Thu gọn"></button>',
         group: 0,
         maxDepth: 5,
         threshold: 20
@@ -62,9 +62,9 @@
 
             list.placeEl = $('<div class="' + list.options.placeClass + '"/>');
 
-            /*$.each(this.el.find(list.options.itemNodeName), function (k, el) {
+            $.each(this.el.find(list.options.itemNodeName), function (k, el) {
                 list.setParent($(el));
-            });*/
+            });
 
             list.el.on('click', 'button', function (e) {
                 if (list.dragEl) {
@@ -457,6 +457,8 @@
                 }
             }
         });
+
+        $("[data-toggle='tooltip']").tooltip();
 
         return retval || lists;
     };

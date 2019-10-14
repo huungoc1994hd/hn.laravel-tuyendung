@@ -40,6 +40,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Backend', 'middleware' => ['
         Route::get('/', 'CategoryController@index')->name('admin.category');
         Route::match(['get', 'post'], '/create', 'CategoryController@create')->name('admin.category.create');
         Route::match(['get', 'put'], '/update', 'CategoryController@update')->name('admin.category.update');
+        Route::put('/order', 'CategoryController@order')->name('admin.category.order');
         Route::delete('/delete', 'CategoryController@delete')->name('admin.category.delete');
     });
 

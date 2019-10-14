@@ -21,7 +21,33 @@
                         </div>
                     </div>
 
-                    <div class="dd" id="nestable-menu">
+                    <div class="records--body pb-0" id="dd-save-order" style="display: none;">
+                        <div class="alert alert-primary">
+                            Thứ tự sắp xếp đã được thay đổi.
+                            {{
+                                Html::linkRoute(
+                                    'admin.category.order',
+                                    'Cập nhật',
+                                    [],
+                                    [
+                                        'class' => 'btn btn-xs btn-primary btn-rounded ml-2',
+                                        'id' => 'btn-save-order'
+                                    ]
+                                )
+                            }}
+
+                            {{
+                                Html::linkRoute(
+                                    'admin.category',
+                                    'Hủy bỏ',
+                                    [],
+                                    ['class' => 'btn btn-xs btn-outline-danger btn-rounded']
+                                )
+                            }}
+                        </div>
+                    </div>
+
+                    <div class="dd" id="nestable-menu" rel="select-container">
                         {!! Widget::category([
                             'template' => 'ol',
                             'categories' => $categories
@@ -41,5 +67,7 @@
             });
         </script>
     @endif
+
+
 
 @endsection
