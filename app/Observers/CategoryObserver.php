@@ -25,6 +25,7 @@ class CategoryObserver
                 break;
         }
 
+        $model->position = json_encode($model->position);
         $model->url = $urlPrefix . '/' . $model->slug;
     }
 }

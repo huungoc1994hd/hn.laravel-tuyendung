@@ -16,6 +16,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
  * @property string $type
  * @property int $status
  * @property int $order
+ * @property string $position
  * @property int $parent_id
  * @property timestamp $created_at
  * @property timestamp $updated_at
@@ -43,6 +44,7 @@ class Category extends Model
         'type',
         'status',
         'order',
+        'position',
         'parent_id'
     ];
 

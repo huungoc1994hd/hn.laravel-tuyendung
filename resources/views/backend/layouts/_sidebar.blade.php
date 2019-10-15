@@ -60,7 +60,7 @@
                     Html::linkRoute('admin.option', '<i class="fa fa-cog"></i> <span>Cấu hình chung</span>'),
                     Html::linkRoute('admin.slider.index', '<i class="fa fa-images"></i> <span>Quản lý Sliders</span>'),
                     Html::linkRoute('admin.category', '<i class="fa fa-th"></i> <span>Quản lý danh mục</span>'),
-                    Html::link('', '<i class="fa fa-file-alt"></i> <span>Quản lý bài viết</span>'),
+                    Html::linkRoute('admin.posts', '<i class="fa fa-file-alt"></i> <span>Quản lý bài viết</span>'),
                     Html::link('', '<i class="fa fa-bullhorn"></i> <span>Quản lý tin tuyển dụng</span>'),
                     Html::link('', '<i class="fa fa-users"></i> <span>Quản lý thành viên</span>')
                 ]) !!}

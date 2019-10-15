@@ -44,6 +44,12 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Backend', 'middleware' => ['
         Route::delete('/delete', 'CategoryController@delete')->name('admin.category.delete');
     });
 
+    Route::group(['prefix' => 'posts'], function () {
+        Route::get('/', 'PostsController@index')->name('admin.posts');
+        Route::match(['get', 'post'], '/create', 'PostsController@create')->name('admin.posts.create');
+        Route::match(['get', 'put'], '/update', 'PostsController@update')->name('admin.posts.update');
+    });
+
 
 });
 

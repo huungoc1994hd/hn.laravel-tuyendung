@@ -62,4 +62,7 @@ $(document).ready(function () {
 
         return false;
     });
+
+    // Selectize
+    $("[data-role='select2']").select2();
 });

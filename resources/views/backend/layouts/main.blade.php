@@ -25,6 +25,7 @@
     {!! Html::style('backend/css/datatables.min.css') !!}
     {!! Html::style('backend/css/nestable.css') !!}
     {!! Html::style('backend/css/switchery.css') !!}
+    {!! Html::style('backend/css/select2.min.css') !!}
     {!! Html::style('backend/css/style.css') !!}
     {!! Html::style('backend/css/profile.css') !!}
 
@@ -65,6 +66,7 @@
 {!! Html::script('backend/js/raphael.min.js') !!}
 {!! Html::script('backend/js/morris.min.js') !!}
 {!! Html::script('backend/js/switchery.js') !!}
+{!! Html::script('backend/js/select2.min.js') !!}
 {!! Html::script('backend/js/jvectormap.min.js') !!}
 {!! Html::script('backend/js/jvectormap-world-mill.min.js') !!}
 {!! Html::script('vendor/laravel-filemanager/js/lfm.js') !!}

@@ -19,16 +19,11 @@
         'class' => 'label-text col-lg-3 col-form-label control-label'
     ]) }}
     <div class="col-lg-9">
-        {{
-            Form::select(
-                'parent_id',
-                $categoriesSelectData,
-                $categoryModel->parent_id ?? 0,
-                [
-                    'class' => 'form-control'
-                ]
-            )
-        }}
+        {!! Widget::category([
+           'template' => 'select',
+           'name' => 'parent_id',
+           'defaultValue' => $categoryModel->parent_id ?? 0
+       ]) !!}
     </div>
 </div>
 
@@ -55,6 +50,30 @@
                     0 => [
                         'disabled' => 'disabled'
                     ]
+                ]
+            )
+        }}
+    </div>
+</div>
+
+<div class="form-group row">
+    {{ Form::label('position', 'Vị trí hiển thị', [
+        'class' => 'label-text col-lg-3 col-form-label control-label'
+    ]) }}
+    <div class="col-lg-9">
+        {{
+            Form::select(
+                'position[]',
+                [
+                    1 => 'Menu chính',
+                    2 => 'Trang chủ',
+                    3 => 'Chân trang (Footer)'
+                ],
+                json_decode($categoryModel->position, true) ?? 1,
+                [
+                    'class' => 'form-control',
+                    'data-role' => 'select2',
+                    'multiple' => 'multiple',
                 ]
             )
         }}

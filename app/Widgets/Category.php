@@ -13,7 +13,9 @@ class Category extends AbstractWidget
      */
     protected $config = [
         'template' => 'ol',
-        'categories' => null
+        'name' => null,
+        'class' => 'form-control',
+        'defaultValue' => 0
     ];
 
     /**
@@ -30,9 +32,35 @@ class Category extends AbstractWidget
      */
     public function run()
     {
+        $categories = \App\Http\Models\Category::where('parent_id', 0)
+            ->with('children')
+            ->get();
+
         return view('widgets.category.index', [
             'config' => $this->config,
-            'categories' => $this->config['categories']
+            'categories' => $categories,
+            'categoriesSelectData' => $this->flattenDown($categories)
         ]);
+    }
+
+    /**
+     * @param $data
+     * @param int $index
+     * @param array $elements
+     * @return array of select tag data list
+     */
+    protected function flattenDown($data, $index = 0, &$elements = [])
+    {
+        $elements[0] = ':root';
+
+        foreach($data as $e) {
+            $elements[$e->id] = str_repeat('---', $index) . $e->name;
+
+            if (!empty($e->children)) {
+                $elements = $this->flattenDown($e->children, $index+1, $elements);
+            }
+        }
+
+        return $elements;
     }
 }

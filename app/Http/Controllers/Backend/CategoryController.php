@@ -39,13 +39,9 @@ class CategoryController extends Controller
     {
         $categoryModel = new Category();
 
-        $categories = Category::where('parent_id', 0)
-            ->with('children')
-            ->get();
-        $categoriesSelectData = $this->flattenDown($categories);
-
         if ($request->isMethod('post')) {
             $input = $request->all();
+
             if (!Category::create($input)) {
                 return redirect()->back()
                     ->with('error', 'Đã xảy ra lỗi máy chủ cục bộ');
@@ -57,7 +53,6 @@ class CategoryController extends Controller
 
         return view('backend.category.create')->with([
             'categoryModel' => $categoryModel,
-            'categoriesSelectData' => $categoriesSelectData
         ]);
     }
 
@@ -71,11 +66,6 @@ class CategoryController extends Controller
         if (!$categoryModel) {
             throw new NotFoundHttpException();
         }
-
-        $categories = Category::where('parent_id', 0)
-            ->with('children')
-            ->get();
-        $categoriesSelectData = $this->flattenDown($categories);
 
         if ($request->isMethod('put')) {
             $input = $request->all();
@@ -91,7 +81,6 @@ class CategoryController extends Controller
 
         return view('backend.category.update')->with([
             'categoryModel' => $categoryModel,
-            'categoriesSelectData' => $categoriesSelectData
         ]);
     }
 
@@ -134,27 +123,6 @@ class CategoryController extends Controller
         }
 
         return $result;
-    }
-
-    /**
-     * @param $data
-     * @param int $index
-     * @param array $elements
-     * @return array of select tag data list
-     */
-    protected function flattenDown($data, $index = 0, &$elements = [])
-    {
-        $elements[0] = ':root';
-
-        foreach($data as $e) {
-            $elements[$e->id] = str_repeat('---', $index) . $e->name;
-
-            if (!empty($e->children)) {
-                $elements = $this->flattenDown($e->children, $index+1, $elements);
-            }
-        }
-
-        return $elements;
     }
 
     /**
