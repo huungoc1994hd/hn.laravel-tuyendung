@@ -67,6 +67,7 @@
                                         'preview' => 'logo-preview',
                                         'data-upload' => 'image',
                                         'name' => 'logo',
+                                        'data-input' => 'logo',
                                         'browse' => 'Chọn ảnh...',
                                         'value' => $optionModel->logo,
                                         'data-rule-required' => 'true',
@@ -85,6 +86,7 @@
                                         'preview' => 'favicon-preview',
                                         'data-upload' => 'image',
                                         'name' => 'favicon',
+                                        'data-input' => 'favicon',
                                         'browse' => 'Chọn ảnh...',
                                         'value' => $optionModel->favicon
                                     ]) }}

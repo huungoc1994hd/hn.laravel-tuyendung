@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Http\Models\Category;
-use App\Observers\CategoryObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Category::observe(CategoryObserver::class);
+        \App\Http\Models\Media::observe(\App\Observers\MediaObserver::class);
+        \App\Http\Models\Category::observe(\App\Observers\CategoryObserver::class);
+        \App\Http\Models\Posts::observe(\App\Observers\PostsObserver::class);
+        \App\Http\Models\Option::observe(\App\Observers\OptionObserver::class);
+        \App\Http\Models\Phone::observe(\App\Observers\PhoneObserver::class);
+        \App\Http\Models\User::observe(\App\Observers\UserObserver::class);
     }
 }

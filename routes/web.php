@@ -32,7 +32,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Backend', 'middleware' => ['
     Route::group(['prefix' => '/slider'], function () {
         Route::get('/', 'SliderController@index')->name('admin.slider.index');
         Route::match(['get', 'post'], '/create', 'SliderController@create')->name('admin.slider.create');
-        Route::match(['get', 'put'], '/update', 'SliderController@update ')->name('admin.slider.update');
+        Route::match(['get', 'put'], '/update', 'SliderController@update')->name('admin.slider.update');
         Route::delete('/delete', 'SliderController@delete')->name('admin.slider.delete');
     });
 
@@ -48,6 +48,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Backend', 'middleware' => ['
         Route::get('/', 'PostsController@index')->name('admin.posts');
         Route::match(['get', 'post'], '/create', 'PostsController@create')->name('admin.posts.create');
         Route::match(['get', 'put'], '/update', 'PostsController@update')->name('admin.posts.update');
+        Route::delete('/delete', 'PostsController@delete')->name('admin.posts.delete');
     });
 
 

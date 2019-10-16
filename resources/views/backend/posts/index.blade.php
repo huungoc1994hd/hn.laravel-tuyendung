@@ -32,14 +32,45 @@
                                     <th>ID</th>
                                     <th>Hình ảnh</th>
                                     <th>Tên</th>
-                                    <th>URL</th>
                                     <th>Trạng thái</th>
                                     <th>Ngày tạo</th>
                                     <th class="text-right">Hành động</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                    @foreach($postsModel as $item)
+                                        <tr>
+                                            <td>#{{ $item->id }}</td>
+                                            <td>
+                                                <img src="{{ asset($item->avatar->image) }}" alt="{{ $item->title }}" alt="{{ $item->title }}" />
+                                            </td>
+                                            <td>{{ $item->title }}</td>
+                                            <td>{!! $item->statusConvert() !!}</td>
+                                            <td>{{ $item->created_at }}</td>
+                                            <td class="text-right">
+                                                {{
+                                                    Html::linkRoute(
+                                                        'admin.posts.update', '<i class="fa fa-edit"></i>',
+                                                         ['id' => $item->id],
+                                                         [
+                                                             'class' => 'btn btn-xs btn-rounded btn-primary'
+                                                         ]
+                                                    )
+                                                }}
+                                                {{
+                                                    Html::linkRoute(
+                                                        'admin.posts.delete', '<i class="fas fa-trash-alt"></i>',
+                                                         ['ids' => $item->id],
+                                                         [
+                                                             'class' => 'btn btn-xs btn-rounded btn-danger',
+                                                             'data-method' => 'delete',
+                                                             'data-confirm' => '<p>Bạn sắp xóa 1 bài viết. Điều này là không thể đảo ngược.</p><p>Bạn có chắc chắn muốn xóa?</p>'
+                                                         ]
+                                                    )
+                                                }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

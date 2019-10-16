@@ -2,8 +2,7 @@
 
 namespace App\Http\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Components\Model;
 
 /**
  * This model of the table 'option'
@@ -70,19 +69,5 @@ class Option extends Model
     {
         return $this->hasOne(Email::class, 'relationship_id', 'id')
             ->where('relationship_table', 'option');
-    }
-
-    /**
-     * This action will be called when this model is saving
-     */
-    public function save(array $options = [])
-    {
-        $this->phone()->relationship_table = $this->table;
-        $this->phone()->relationship_id = $this->id;
-
-        $this->email()->relationship_table = $this->table;
-        $this->email()->relationship_id = $this->id;
-
-        return parent::save($options);
     }
 }

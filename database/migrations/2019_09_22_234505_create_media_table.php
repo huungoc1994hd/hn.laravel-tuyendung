@@ -26,7 +26,7 @@ class CreateMediaTable extends Migration
             $table->integer('order')->default(0);
             $table->string('relationship_table', 20)->nullable();
             $table->unsignedInteger('relationship_id')->nullable();
-            $table->integer('status')->default(0);
+            $table->integer('status')->nullable();
             $table->timestamps();
         });
     }

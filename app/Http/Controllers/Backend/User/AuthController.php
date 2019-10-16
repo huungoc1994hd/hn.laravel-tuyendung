@@ -10,6 +10,7 @@ class AuthController extends Controller
 {
     /**
      * Action login
+     *
      * @param LoginFormRequest $request
      * @return session user
      */
@@ -24,6 +25,7 @@ class AuthController extends Controller
 
     /**
      * Action logout
+     *
      * @return session user
      */
     public function actionLogout()

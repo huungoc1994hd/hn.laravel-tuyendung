@@ -11,10 +11,10 @@
         src='{{ !empty($config['value']) ? asset($config['value']) : asset('backend/images/nophoto.png') }}'
     />
 </div>
-<div class='input-group' data-upload='{{ $config['data-upload'] }}' data-input='{{ $config['name'] }}' data-preview='{{ $config['preview'] }}'>
+<div class='input-group' data-upload='{{ $config['data-upload'] }}' data-input='{{ $config['data-input'] }}' data-preview='{{ $config['preview'] }}'>
     <input
         type='text'
-        id='{{ $config['name'] }}'
+        id='{{ $config['data-input'] }}'
         name='{{ $config['name'] }}'
         value='{{ $config['value'] }}'
         data-rule-required='{{ $config['data-rule-required'] }}'

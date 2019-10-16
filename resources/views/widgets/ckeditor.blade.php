@@ -4,7 +4,7 @@
 
 ------------------------------}}
 
-<textarea id='{{ $config['name'] }}' name='{{ $config['name'] }}' class='form-control'>{{ e($config['content']) }}</textarea>
+<textarea id='{{ $config['name'] }}' name='{{ $config['name'] }}' class='form-control'>{{ $config['content'] }}</textarea>
 
 
 <script type='text/javascript'>

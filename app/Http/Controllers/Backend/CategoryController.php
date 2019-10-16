@@ -69,7 +69,6 @@ class CategoryController extends Controller
 
         if ($request->isMethod('put')) {
             $input = $request->all();
-            $input['status'] = $input['status'] ?? Category::STATUS_HIDDEN;
             if (!$categoryModel->update($input)) {
                 return redirect()->back()
                     ->with('error', 'Đã xảy ra lỗi máy chủ cục bộ');

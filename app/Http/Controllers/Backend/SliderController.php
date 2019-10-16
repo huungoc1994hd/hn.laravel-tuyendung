@@ -8,15 +8,26 @@ use Illuminate\Http\Request;
 
 class SliderController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        $mediaModel = Media::paginate(config('app.pagination'), ['*'], 'trang');
+        $mediaModel = Media::where('type', 'slider')
+            ->orderBy('created_at', 'desc')
+            ->paginate(config('app.pagination'), ['*'], 'trang');
 
         return view('backend.slider.index')->with([
             'mediaModel' => $mediaModel
         ]);
     }
 
+    /**
+     * Create the slide
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function create(Request $request)
     {
         $mediaModel = new Media();
@@ -24,13 +35,6 @@ class SliderController extends Controller
         $isPost = $request->isMethod('post');
         if ($isPost) {
             $input = $request->all();
-            if (empty($input['status'])) {
-                $input['status'] = Media::STATUS_HIDDEN;
-            }
-            if (empty($input['target'])) {
-                $input['target'] = Media::TARGET_SELF;
-            }
-
             if (!$mediaModel->create($input)) {
                 return redirect()->refresh()->withErrors('Đã xảy ra lỗi máy chủ cục bộ');
             }
@@ -43,6 +47,12 @@ class SliderController extends Controller
         ]);
     }
 
+    /**
+     * Update the slide
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function update(Request $request)
     {
         $mediaModel = Media::find($request->id);
@@ -50,13 +60,6 @@ class SliderController extends Controller
         $isPut = $request->isMethod('put');
         if ($isPut) {
             $input = $request->all();
-            if (empty($input['status'])) {
-                $input['status'] = Media::STATUS_HIDDEN;
-            }
-            if (empty($input['target'])) {
-                $input['target'] = Media::TARGET_SELF;
-            }
-
             if (!$mediaModel->update($input)) {
                 return redirect()->refresh()->withErrors('Đã xảy ra lỗi máy chủ cục bộ');
             }
@@ -69,6 +72,12 @@ class SliderController extends Controller
         ]);
     }
 
+    /**
+     * Delete the slide
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete(Request $request)
     {
         if (!Media::destroy($request->id)) {

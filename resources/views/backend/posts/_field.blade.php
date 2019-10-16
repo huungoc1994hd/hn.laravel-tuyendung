@@ -20,12 +20,14 @@
     <div class="col-lg-9">
         {{ Form::text('title_seo', null, [
             'placeholder' => 'Tiêu đề SEO không vượt quá 70 ký tự',
-            'class' => 'form-control'
+            'class' => 'form-control',
+            'data-rule-maxlength' => '70',
+            'data-msg-maxlength' => 'Tiêu đề SEO không được vượt quá 70 ký tự'
         ]) }}
     </div>
 </div>
 
-<div class="form-group required row">
+<div class="form-group row">
     {{ Form::label('cate_id', 'Chọn danh mục', [
         'class' => 'label-text col-lg-3 col-form-label control-label'
     ]) }}
@@ -39,16 +41,19 @@
 </div>
 
 <div class="form-group required row">
-    {{ Form::label('posts[avatar]', 'Ảnh đại diện', [
+    {{ Form::label('avatar', 'Ảnh đại diện', [
         'class' => 'label-text col-lg-3 col-form-label control-label'
     ]) }}
     <div class="col-lg-9">
         {{ Widget::FileManager([
             'preview' => 'avatar-preview',
             'data-upload' => 'image',
-            'name' => 'posts[avatar]',
+            'data-input' => 'avatar',
+            'name' => 'avatar[image]',
             'browse' => 'Chọn ảnh...',
-            'value' => $postsModel->avatar
+            'value' => $postsModel->avatar->image ?? '',
+            'data-rule-required' => 'true',
+            'data-msg-required' => 'Vui lòng chọn ảnh đại diện'
         ]) }}
     </div>
 </div>
@@ -61,7 +66,8 @@
         {{ Widget::ckeditor([
             'name' => 'description',
             'height' => 200,
-            'type' => 'basic'
+            'type' => 'basic',
+            'content' => $postsModel->description
         ]) }}
     </div>
 </div>
@@ -74,30 +80,8 @@
         {{ Widget::ckeditor([
             'name' => 'content',
             'height' => 500,
+            'content' => $postsModel->content
         ]) }}
-    </div>
-</div>
-
-<div class="form-group row">
-    {{ Form::label('status', 'Trạng thái', [
-        'class' => 'label-text col-md-3 col-form-label control-label'
-    ]) }}
-    <div class="col-md-9">
-        {{
-            Form::checkbox(
-                'status',
-                1,
-                (collect($postsModel)->isEmpty() || $postsModel->status == 1) ? true : false,
-                [
-                    'data-role' => 'switch',
-                    'data-on-color' => 'primary',
-                    'data-off-color' => 'danger',
-                    'data-on-text' => 'Hiện',
-                    'data-off-text' => 'Ẩn',
-                    'data-size' => 'small'
-                ]
-            )
-        }}
     </div>
 </div>
 
@@ -137,6 +121,29 @@
             'class' => 'form-control',
             'style' => 'width:100px;'
         ]) }}
+    </div>
+</div>
+
+<div class="form-group row">
+    {{ Form::label('status', 'Trạng thái', [
+        'class' => 'label-text col-md-3 col-form-label control-label'
+    ]) }}
+    <div class="col-md-9">
+        {{
+            Form::checkbox(
+                'status',
+                1,
+                (!isset($postsModel->status) || $postsModel->status == 1) ? true : false,
+                [
+                    'data-role' => 'switch',
+                    'data-on-color' => 'primary',
+                    'data-off-color' => 'danger',
+                    'data-on-text' => 'Hiện',
+                    'data-off-text' => 'Ẩn',
+                    'data-size' => 'small'
+                ]
+            )
+        }}
     </div>
 </div>
 

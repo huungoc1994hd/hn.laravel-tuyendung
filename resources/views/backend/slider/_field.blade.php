@@ -56,7 +56,7 @@
             Form::checkbox(
                 'status',
                 1,
-                collect($mediaModel)->isEmpty() || $mediaModel->status == 1 ? true : false,
+                (!isset($mediaModel->status) || $mediaModel->status == 1) ? true : false,
                 [
                     'data-role' => 'switch',
                     'data-on-color' => 'primary',
@@ -78,7 +78,7 @@
             Form::checkbox(
                 'target',
                 '_blank',
-                collect($mediaModel)->isEmpty() || $mediaModel->target == '_blank' ? true : false,
+                (!isset($mediaModel->target) || $mediaModel->target == '_blank') ? true : false,
                 [
                     'data-role' => 'switch',
                     'data-on-color' => 'primary',

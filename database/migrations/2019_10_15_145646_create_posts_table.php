@@ -19,9 +19,9 @@ class CreatePostsTable extends Migration
             $table->string('title_seo')->nullable();
             $table->string('slug');
             $table->text('description')->nullable();
-            $table->longText('content');
+            $table->longText('content')->nullable();
             $table->unsignedInteger('author_id');
-            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('status')->nullable();
             $table->string('target', 20)->default('_self');
             $table->string('url')->nullable();
             $table->text('tags')->nullable();

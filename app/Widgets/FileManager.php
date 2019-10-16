@@ -13,6 +13,8 @@ class FileManager extends AbstractWidget
      */
     protected $config = [
         'data-upload' => 'image',
+        'name' => 'image',
+        'data-input' => 'image',
         'value' => null,
         'data-rule-required' => 'false',
         'data-msg-required' => null,

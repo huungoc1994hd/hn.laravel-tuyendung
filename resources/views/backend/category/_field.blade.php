@@ -89,7 +89,7 @@
             Form::checkbox(
                 'status',
                 1,
-                (collect($categoryModel)->isEmpty() || $categoryModel->status == 1) ? true : false,
+                (!isset($categoryModel->status) || $categoryModel->status == 1) ? true : false,
                 [
                     'data-role' => 'switch',
                     'data-on-color' => 'primary',

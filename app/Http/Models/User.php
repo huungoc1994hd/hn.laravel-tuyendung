@@ -42,6 +42,7 @@ class User extends Authenticatable
 
     /**
      * Relationship one to one from User model to Phone model
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function phone()
     {
@@ -51,6 +52,7 @@ class User extends Authenticatable
 
     /**
      * Relationship one to one from User model to UserProfile model
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function profile()
     {
@@ -59,6 +61,9 @@ class User extends Authenticatable
 
     /**
      * This action will be called when this model is saving
+     *
+     * @param array $options
+     * @return bool
      */
     public function save(array $options = [])
     {

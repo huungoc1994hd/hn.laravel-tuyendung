@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\DB;
 
 class OptionController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
         $optionModel = Option::first();

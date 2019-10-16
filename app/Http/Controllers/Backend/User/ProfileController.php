@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
         $userModel = User::find(Auth::user()->id);

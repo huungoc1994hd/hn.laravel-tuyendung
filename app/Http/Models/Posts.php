@@ -3,7 +3,7 @@
 namespace App\Http\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\Model;
+use App\Http\Components\Model;
 
 /**
  * This model of the table "posts"
@@ -64,5 +64,15 @@ class Posts extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    /**
+     * Relationship one to one from Posts model to Media model
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function avatar()
+    {
+        return $this->hasOne(Media::class, 'relationship_id', 'id')
+            ->where('relationship_table', 'posts');
     }
 }

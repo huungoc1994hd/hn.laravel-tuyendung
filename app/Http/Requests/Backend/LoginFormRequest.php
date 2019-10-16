@@ -45,6 +45,10 @@ class LoginFormRequest extends FormRequest
         ];
     }
 
+    /**
+     * @param $validator
+     * @return bool
+     */
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {

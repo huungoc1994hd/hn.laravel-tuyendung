@@ -2,7 +2,7 @@
 
 namespace App\Http\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Http\Components\Model;
 
 /**
  * This model of the table "phones"
@@ -30,17 +30,4 @@ class Phone extends Model
     protected $fillable = [
         'area_code', 'phone', 'relationship_table', 'relationship_id'
     ];
-
-    /**
-     * This action will be called when this model is saving
-     *
-     * @var array
-     */
-    public function save(array $options = [])
-    {
-        // Before save
-        $this->area_code = $this::VIETNAMESE_AREA_CODE;
-
-        return parent::save($options);
-    }
 }

@@ -1,6 +1,6 @@
 @extends('backend.layouts.main')
 
-@section('title', 'Thêm mới bài viết')
+@section('title', 'Cập nhật bài viết')
 @section('body')
 
     <section class="main--content">
@@ -9,7 +9,7 @@
                 <div class="title">
                     <h6 class="h6">
                         <i class="fa fa-plus-circle"></i>
-                        Thêm mới bài viết
+                        Cập nhật bài viết
                     </h6>
                     {{
                         Html::linkRoute(
@@ -25,8 +25,8 @@
 
                 {!! Form::model($postsModel, [
                     'data-validate' => 'true',
-                    'route' => 'admin.posts.create',
-                    'method' => 'post'
+                    'route' => ['admin.posts.update', 'id' => $postsModel->id],
+                    'method' => 'put'
                 ]) !!}
                 @include('backend.posts._field')
                 {{ Form::close() }}

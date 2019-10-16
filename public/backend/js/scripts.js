@@ -65,4 +65,24 @@ $(document).ready(function () {
 
     // Selectize
     $("[data-role='select2']").select2();
+
+    // Data rule max length
+    $("[data-rule-maxlength]").each(function() {
+        let maxLengthHtml = `<span class="maxlength">${$(this).data('rule-maxlength')}</span>`;
+        $(this).after(maxLengthHtml);
+    });
+
+    $(document).on('keypress input blur focus', '[data-rule-maxlength]', function() {
+        let maxLength = $(this).data('rule-maxlength');
+        let trigger = $(this).next('.maxlength');
+
+        let useLength = $(this).val().length;
+        let restLength = maxLength - useLength;
+
+        trigger.html(restLength);
+
+        if (restLength <= 0) {
+            return false;
+        }
+    });
 });
