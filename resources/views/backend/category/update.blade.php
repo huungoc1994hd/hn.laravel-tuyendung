@@ -25,7 +25,7 @@
 
                 {!! Form::model($categoryModel, [
                     'data-validate' => 'true',
-                    'route' => 'admin.category.update',
+                    'route' => ['admin.category.update', 'id' => $categoryModel->id],
                     'method' => 'put'
                 ]) !!}
                 @include('backend.category._field')

@@ -12,7 +12,7 @@
             @foreach ($elements as $element)
                 {{-- "Three Dots" Separator --}}
                 @if (is_string($element))
-                    <a class="paginate_button current" aria-disabled="true"><span class="page-link">$element</span></a>
+                    <span aria-disabled="true" class="ml-2 mr-2">{{ $element }}</span>
                 @endif
 
                 {{-- Array Of Links --}}

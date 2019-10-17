@@ -55,6 +55,8 @@
             'data-rule-required' => 'true',
             'data-msg-required' => 'Vui lòng chọn ảnh đại diện'
         ]) }}
+
+        <label id="avatar-error" class="error" for="avatar"></label>
     </div>
 </div>
 

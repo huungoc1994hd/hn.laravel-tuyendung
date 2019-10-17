@@ -10,12 +10,6 @@
     <a href="#" class="navbar--btn" data-toggle="sidebar" title="Toggle Sidebar">
         <i class="fa fa-bars"></i>
     </a>
-    <div class="navbar--search">
-        <form action="search-results.html">
-            <input type="search" name="search" class="form-control" placeholder="Tìm kiếm..." required>
-            <button class="btn-link"><i class="fa fa-search"></i></button>
-        </form>
-    </div>
     <div class="navbar--nav ml-auto">
         <ul class="nav">
             <li class="nav-item"> <a href="#" class="nav-link"> <i class="fa fa-bell"></i> <span class="badge text-white bg-blue">7</span> </a> </li>

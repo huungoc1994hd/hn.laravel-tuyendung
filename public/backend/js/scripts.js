@@ -85,4 +85,97 @@ $(document).ready(function () {
             return false;
         }
     });
+
+    var actionSearch = $(".typeahead.search").attr('action');
+    var engine = new Bloodhound({
+        remote: {
+            url: actionSearch + '?q=%QUERY%',
+            wildcard: '%QUERY%'
+        },
+        datumTokenizer: Bloodhound.tokenizers.whitespace('q'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+    });
+
+    $(".search-input").typeahead({
+        highlight: true,
+        minLength: 1
+    }, {
+        source: engine.ttAdapter(),
+        name: 'postsList',
+        limit: 10,
+        order: 'desc',
+        display: 'title',
+        templates: {
+            empty: [
+                '<div class="list-group search-results-dropdown"><div class="list-group-item">Không có kết quả phù hợp.</div></div>'
+            ],
+            header: [
+                '<div class="list-group search-results-dropdown">'
+            ],
+            suggestion: function (data) {
+                return '<div class="list-group-item">' + data.title + '</div>'
+            }
+        }
+    }).on('typeahead:select', function(ev, value) {
+        let bodyHtml = `
+            <tr>
+                <td>#${value.id}</td>
+                <td>
+                    <img src="${value.avatar !== null ? value.avatar.image : ''}" alt="${value.title}" title="${value.title}" />
+                </td>
+                <td>${value.title}</td>
+                <td>
+                    <label class="label label-danger">Ẩn</label>
+                </td>
+                <td>${value.created_at}</td>
+                <td class="text-right">
+                    <a href="posts/update?id=${value.id}" class="btn btn-xs btn-rounded btn-primary"><i class="fa fa-edit"></i></a>
+                    <a href="posts/delete?id=${value.id}" class="btn btn-xs btn-rounded btn-danger" data-method="delete" data-confirm="<p>Bạn sắp xóa 1 bài viết. Điều này là không thể đảo ngược.</p><p>Bạn có chắc chắn muốn xóa?</p>"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        `;
+
+        $("#search-data").html(bodyHtml).mark(value.title);
+    }).on('keyup', function() {
+        let value = $.trim($(this).val());
+
+        if (value == '') {
+            $("#search-data").html('').hide();
+            $("#old-data").show();
+            $(".dataTables_paginate").show();
+            return false;
+        }
+
+        $("#search-data").show();
+        $("#old-data").hide();
+        $(".dataTables_paginate").hide();
+
+        $.get(actionSearch, {q: value}, function(data) {
+            let bodyHtml = '';
+
+            data.map(function(value) {
+                bodyHtml += `
+                    <tr>
+                        <td>#${value.id}</td>
+                        <td>
+                            <img src="${value.avatar !== null ? value.avatar.image : ''}" alt="${value.title}" title="${value.title}" />
+                        </td>
+                        <td>${value.title}</td>
+                        <td>
+                            <label class="label label-danger">Ẩn</label>
+                        </td>
+                        <td>${value.created_at}</td>
+                        <td class="text-right">
+                            <a href="posts/update?id=${value.id}" class="btn btn-xs btn-rounded btn-primary"><i class="fa fa-edit"></i></a>
+                            <a href="posts/delete?id=${value.id}" class="btn btn-xs btn-rounded btn-danger" data-method="delete" data-confirm="<p>Bạn sắp xóa 1 bài viết. Điều này là không thể đảo ngược.</p><p>Bạn có chắc chắn muốn xóa?</p>"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            $("#search-data").html(bodyHtml).mark(value);
+        });
+    });
+
+
 });

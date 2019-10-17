@@ -52,6 +52,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Backend', 'middleware' => ['
     });
 
 
+    Route::get('/search', 'SearchController@find')->name('admin.search');
 });
 
 

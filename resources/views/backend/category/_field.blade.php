@@ -1,5 +1,3 @@
-{{ Form::hidden('id', $categoryModel->id ?? '') }}
-
 <div class="form-group required row">
     {{ Form::label('name', 'Tên danh mục', [
         'class' => 'label-text col-lg-3 col-form-label control-label'

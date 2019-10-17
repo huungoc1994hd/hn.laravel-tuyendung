@@ -67,6 +67,8 @@
 {!! Html::script('backend/js/morris.min.js') !!}
 {!! Html::script('backend/js/switchery.js') !!}
 {!! Html::script('backend/js/select2.min.js') !!}
+{!! Html::script('backend/js/typeahead.bundle.min.js') !!}
+{!! Html::script('backend/js/mark.min.js') !!}
 {!! Html::script('backend/js/jvectormap.min.js') !!}
 {!! Html::script('backend/js/jvectormap-world-mill.min.js') !!}
 {!! Html::script('vendor/laravel-filemanager/js/lfm.js') !!}

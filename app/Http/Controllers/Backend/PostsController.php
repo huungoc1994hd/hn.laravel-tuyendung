@@ -16,7 +16,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $postsModel = Posts::orderBy('created_at', 'desc')->get();
+        $postsModel = Posts::orderBy('created_at', 'desc')
+            ->paginate(config('app.pagination'), ['*'], 'trang');
 
         return view('backend.posts.index')->with([
             'postsModel' => $postsModel
