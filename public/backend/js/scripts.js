@@ -117,8 +117,17 @@ $(document).ready(function () {
             }
         }
     }).on('typeahead:select', function(ev, value) {
+        uncheckedAll();
+        $(".delete-action").hide();
+
         let bodyHtml = `
-            <tr>
+            <tr data-id="${value.id}">
+                <td>
+                    <label class="form-check" style="margin-top: -13px;">
+                        <input type="checkbox" name="checkbox" class="form-check-input" rel="select-one">
+                        <span class="form-check-label"></span>
+                    </label>
+                </td>
                 <td>#${value.id}</td>
                 <td>
                     <img src="${value.avatar !== null ? value.avatar.image : ''}" alt="${value.title}" title="${value.title}" />
@@ -130,7 +139,7 @@ $(document).ready(function () {
                 <td>${value.created_at}</td>
                 <td class="text-right">
                     <a href="posts/update?id=${value.id}" class="btn btn-xs btn-rounded btn-primary"><i class="fa fa-edit"></i></a>
-                    <a href="posts/delete?id=${value.id}" class="btn btn-xs btn-rounded btn-danger" data-method="delete" data-confirm="<p>Bạn sắp xóa 1 bài viết. Điều này là không thể đảo ngược.</p><p>Bạn có chắc chắn muốn xóa?</p>"><i class="fas fa-trash-alt"></i></a>
+                    <a href="posts/delete?ids=${value.id}" class="btn btn-xs btn-rounded btn-danger" data-method="delete" data-confirm="<p>Bạn sắp xóa 1 bài viết. Điều này là không thể đảo ngược.</p><p>Bạn có chắc chắn muốn xóa?</p>"><i class="fas fa-trash-alt"></i></a>
                 </td>
             </tr>
         `;
@@ -151,11 +160,20 @@ $(document).ready(function () {
         $(".dataTables_paginate").hide();
 
         $.get(actionSearch, {q: value}, function(data) {
+            uncheckedAll();
+            $(".delete-action").hide();
+
             let bodyHtml = '';
 
             data.map(function(value) {
                 bodyHtml += `
-                    <tr>
+                    <tr data-id="${value.id}">
+                        <td>
+                            <label class="form-check" style="margin-top: -13px;">
+                                <input type="checkbox" class="form-check-input" rel="select-one">
+                                <span class="form-check-label"></span>
+                            </label>
+                        </td>
                         <td>#${value.id}</td>
                         <td>
                             <img src="${value.avatar !== null ? value.avatar.image : ''}" alt="${value.title}" title="${value.title}" />
@@ -167,7 +185,7 @@ $(document).ready(function () {
                         <td>${value.created_at}</td>
                         <td class="text-right">
                             <a href="posts/update?id=${value.id}" class="btn btn-xs btn-rounded btn-primary"><i class="fa fa-edit"></i></a>
-                            <a href="posts/delete?id=${value.id}" class="btn btn-xs btn-rounded btn-danger" data-method="delete" data-confirm="<p>Bạn sắp xóa 1 bài viết. Điều này là không thể đảo ngược.</p><p>Bạn có chắc chắn muốn xóa?</p>"><i class="fas fa-trash-alt"></i></a>
+                            <a href="posts/delete?ids=${value.id}" class="btn btn-xs btn-rounded btn-danger" data-method="delete" data-confirm="<p>Bạn sắp xóa 1 bài viết. Điều này là không thể đảo ngược.</p><p>Bạn có chắc chắn muốn xóa?</p>"><i class="fas fa-trash-alt"></i></a>
                         </td>
                     </tr>
                 `;
@@ -177,5 +195,96 @@ $(document).ready(function () {
         });
     });
 
+    // Checked count function
+    var selectOneCheckedCount = function() {
+        return $("#recordsListView tbody:not(:hidden) [rel='select-one']:checked").length;
+    }
+    var selectOneCount = function() {
+        return $("#recordsListView tbody:not(:hidden) [rel='select-one']").length;
+    }
+
+    // Checked all function
+    function checkedAll() {
+        $("#recordsListView tbody:not(:hidden) [rel='select-one']").prop('checked', true);
+        changeCheckedColor();
+        return false;
+    }
+
+    // Unchecked all function
+    function uncheckedAll() {
+        $("[rel='select-one']").prop('checked', false);
+        changeCheckedColor();
+        return false;
+    }
+
+    // Change checked row color
+    function changeCheckedColor() {
+        $("#recordsListView tbody:not(:hidden) [rel='select-one']:checked").parents('tr').addClass('selected');
+        $("#recordsListView tbody:not(:hidden) [rel='select-one']:not(':checked')").parents('tr').removeClass('selected');
+
+        let sloc = selectOneCount();
+        let slocc = selectOneCheckedCount();
+
+        if (sloc == slocc) {
+            $("[rel='select-all']").prop('checked', true);
+        } else {
+            $("[rel='select-all']").prop('checked', false);
+        }
+
+        $(".chk-length").html(slocc);
+        if (slocc > 0) {
+            $(".delete-action").fadeIn(300);
+        } else {
+            $(".delete-action").fadeOut(300);
+        }
+
+        let idArray = [];
+        $("[rel='select-one']:checked").each(function() {
+            let id = $(this).parents('tr').data('id');
+            idArray.push(id);
+        });
+
+        let href = $('.delete-action a').attr('href').split("?")[0];
+        href += "?ids=" + idArray.join(",");
+        $('.delete-action a').attr('href', href);
+
+        let confirm = `<p>Bạn sắp xóa ${slocc} bài viết. Điều này là không thể đảo ngược.</p><p>Bạn có chắc chắn muốn xóa?</p>`;
+        $('.delete-action a').attr('data-confirm', confirm);
+    }
+
+
+    // Checked all
+    $(document).on('click', "a.checked-all", function() {
+        checkedAll();
+        $(this).parents('.dropdown-menu').removeClass('show');
+        return false;
+    });
+    $(document).on('click', "[rel='select-all']", function() {
+        if ($(this).is(":checked")) {
+            checkedAll();
+        } else {
+            uncheckedAll();
+        }
+    });
+
+    // Unchecked all
+    $(document).on('click', "a.unchecked-all", function() {
+        uncheckedAll();
+        $(this).parents('.dropdown-menu').removeClass('show');
+        return false;
+    });
+
+    $(document).on('click', "[rel='select-one']", function() {
+        let slocc = selectOneCheckedCount();
+        let sloc = selectOneCount();
+
+        if (slocc == sloc) {
+            $("[rel='select-all']").prop('checked', true);
+        } else {
+            $("[rel='select-all']").prop('checked', false);
+        }
+
+        changeCheckedColor();
+    });
 
 });

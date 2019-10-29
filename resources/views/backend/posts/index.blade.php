@@ -7,7 +7,7 @@
         <div class="panel">
             <div class="records--list">
                 <div id="recordsListView_wrapper" class="dataTables_wrapper no-footer">
-                    <div class="topbar">
+                    <div class="topbar pb-2">
                         <div class="toolbar col-md-5 pl-0">
                             Danh sách bài viết
                             {{
@@ -32,6 +32,31 @@
                                 </form>
                             </div>
                         </div>
+
+                        <div class="btn-group mt-3" title="Chọn" data-toggle="tooltip" data-placement="bottom">
+                            <label class="ng-check btn btn-sm btn-rounded btn-outline-secondary">
+                                <input type="checkbox" name="checkbox" rel="select-all">
+                                <span></span>
+                            </label>
+                            <a class="btn btn-sm btn-rounded btn-outline-secondary border-left-0 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"></a>
+                            <div class="dropdown-menu" data-x-placement="bottom-start">
+                                <a href="#" class="dropdown-item checked-all">Đánh dấu tất cả</a>
+                                <a href="#" class="dropdown-item unchecked-all">Bỏ chọn tất cả</a>
+                            </div>
+                        </div>
+                        <div class="delete-action mt-3 ml-3" style="display: none">
+                            {{
+                                Html::linkRoute(
+                                    'admin.posts.delete',
+                                    'Xóa <span class="chk-length"></span> mục đã chọn',
+                                     [],
+                                     [
+                                         'class' => 'btn btn-rounded btn-sm btn-danger',
+                                         'data-method' => 'delete'
+                                     ]
+                                )
+                            }}
+                        </div>
                     </div>
 
                     @if ( $postsModel->count() > 0 )
@@ -40,17 +65,24 @@
                             <table id="recordsListView" class="dataTable no-footer p-0">
                                 <thead>
                                     <tr role="row">
+                                        <th></th>
                                         <th>ID</th>
                                         <th>Hình ảnh</th>
                                         <th>Tên</th>
                                         <th>Trạng thái</th>
                                         <th>Ngày tạo</th>
-                                        <th class="text-right">Hành động</th>
+                                        <th class="text-right" width="80">Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody id="old-data">
                                     @foreach($postsModel as $item)
-                                        <tr>
+                                        <tr data-id="{{ $item->id }}">
+                                            <td>
+                                                <label class="form-check" style="margin-top: -13px;">
+                                                    <input type="checkbox" class="form-check-input" rel="select-one">
+                                                    <span class="form-check-label"></span>
+                                                </label>
+                                            </td>
                                             <td>#{{ $item->id }}</td>
                                             <td>
                                                 <img src="{{ asset($item->avatar->image ?? '') }}" alt="{{ $item->title }}" alt="{{ $item->title }}" />

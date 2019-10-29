@@ -126,7 +126,7 @@ class PostsController extends Controller
             return redirect()->back()->withErrors('Đã xảy ra lỗi máy chủ cục bộ');
         }
 
-        return redirect()->back()->withSuccess('Một bài viết đã được xóa');
+        return redirect()->back()->withSuccess(count($idArr) . ' bài viết đã được xóa');
     }
 
     /**
